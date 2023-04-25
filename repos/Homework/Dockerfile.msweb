@@ -1,0 +1,16 @@
+FROM golang:latest AS construye
+WORKDIR /app
+
+COPY dispatcher.go .
+COPY static static
+
+RUN CGO_ENABLED=0 go build dispatcher.go
+
+FROM scratch
+WORKDIR /
+COPY --from=construye /app/dispatcher /dispatcher
+COPY --from=construye /app/static /static
+
+CMD ["./dispatcher"]
+EXPOSE 80
+
