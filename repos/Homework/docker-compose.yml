@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  webproj:
+    build: web
+    ports:
+      - ${PORT-80}:80
+    volumes:
+      - ./webproj:/static
+
+  wordsproj:
+    build: words
+    ports:
+      - ${PORT-8080}:8080
+
+  postgre:
+    image: db
